@@ -1,0 +1,19 @@
+server {
+    listen 80;
+    server_name 192.168.0.188;
+
+
+    root /var/www/demo_website/html; # Replace with the actual path to your login system files
+    index register.html register.php  login.html  login.php  style.css  welcome.php logout.php;
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+     }
+
+}
